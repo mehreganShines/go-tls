@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example Web Page</title>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+    <button id="log-button">Log User Agent</button>
+    <script>
+      document.getElementById("log-button").addEventListener("click", function() {
+        fetch("/log").then(function(response) {
+          console.log("User Agent logged");
+        });
+      });
+    </script>
+  </body>
+</html>
