@@ -1,6 +1,6 @@
 //incomplete but works. more features will add soon
 // A simple Go program that can print information about the TLS handshakes with itself and listening on port 8443.
-//to generate certificates run "go-tls/self-cert.go" and save the results in cert.pem and key.pem files.
+//to generate certificates run "go-tls/TLSToolkit/self-cert.go" and save the results in cert.pem and key.pem files.
 package main
 
 import (
