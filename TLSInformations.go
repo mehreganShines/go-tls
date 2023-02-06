@@ -19,6 +19,9 @@ func main() {
 
 	config := &tls.Config{
 		Certificates: []tls.Certificate{cert},
+		MinVersion:   tls.VersionTLS12,
+		MaxVersion:   tls.VersionTLS13,
+		CipherSuites: []uint16{tls.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384},
 	}
 
 	ln, err := tls.Listen("tcp", ":8443", config)
@@ -53,8 +56,19 @@ func handleConnection(conn net.Conn) {
 	}
 
 	state := tlsConn.ConnectionState()
-	fmt.Println("TLS Version:", state.Version)
-	fmt.Println("Cipher Suite:", state.CipherSuite)
+
+	var version string
+	switch state.Version {
+	case tls.VersionTLS12:
+		version = "TLS 1.2"
+	case tls.VersionTLS13:
+		version = "TLS 1.3"
+	default:
+		version = "Unknown"
+	}
+
+	fmt.Println("TLS Version:", version)
+	fmt.Println("Cipher Suite:", tls.CipherSuiteName(state.CipherSuite))
 	fmt.Println("Peer Certificates:")
 	for _, cert := range state.PeerCertificates {
 		fmt.Println("- Subject:", cert.Subject)
